@@ -2,14 +2,19 @@ import { queryLLM } from "../llm/ollamaClient";
 
 export async function generateMermaidDiagram(design: string) {
   const prompt = `
-You are a software engineer. Translate the following system design into a simple
-Mermaid flowchart. Include major components and data flow. Use syntax:
+You must ONLY output valid Mermaid syntax.
+DO NOT add explanations.
+DO NOT use markdown.
+DO NOT wrap in backticks.
 
+Format example:
 graph LR
-ComponentA --> ComponentB
+A[Client] --> B[Server]
 
-System Design:
+Now generate a Mermaid diagram for this system design:
+
 ${design}
+
 `;
 
   const diagram = await queryLLM(prompt);

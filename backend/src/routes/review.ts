@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {reviewDesign} from "../reviewers/designReviewer";
+import { generateMermaidDiagram } from "../reviewers/mermaidReviewer";
 
 const router = Router();
 
@@ -11,7 +12,9 @@ router.post("/", async (req, res) => {
 
     try {
         const review = await reviewDesign(design);
-        res.json({ review });
+        const mermaidDiagram = await generateMermaidDiagram(design);
+
+        res.json({ review, mermaidDiagram });
     } catch (error) {
         res.status(500).json({ error: "Failed to review design." });
     }
